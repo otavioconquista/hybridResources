@@ -43,8 +43,7 @@ def load_and_filter_jobs():
 
     return filtered_jobs
 
-# Transforma o JSON em um mais simplificado com dois campos: id e descriçao. A descrição deverá ser formada por uma concatenção dos campos:
-# "titulo_vaga", "pais", "estado", "cidade", "nivel profissional", "nivel_ingles", "nivel_espanhol", "principais_atividades", "competencia_tecnicas_e_comportamentais"
+# Transforma o JSON em um mais simplificado com dois campos: id e descriçao
 
 def transform_jobs(filtered_jobs):
     result = []
@@ -65,14 +64,3 @@ def transform_jobs(filtered_jobs):
             "descricao": descricao
         })
     return result
-
-filtered_jobs = load_and_filter_jobs()
-if filtered_jobs is not None:
-    jobs_list = transform_jobs(filtered_jobs)
-    # Salva no formato de lista, não dicionário
-    output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'JSONs', 'jobs.json')
-    with open(output_path, 'w', encoding='utf-8') as outfile:
-        json.dump(jobs_list, outfile, ensure_ascii=False, indent=4)
-        print(f"Arquivo salvo em {output_path}")
-else:
-    print("No jobs to process.")

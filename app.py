@@ -16,5 +16,10 @@ if __name__ == "__main__":
 
     res = match_jobs_candidates(jobs, candidates)
     df = res["matrix_df"]
-    print("\nMatriz de similaridade (%) (jobs x candidates):")
-    print(df)
+    # Mostra os 3 melhores matches para cada vaga
+    for job_id, row in df.iterrows():
+        top5 = row.nlargest(5)
+        print(f"Vaga {job_id} - Top 5 candidatos:")
+        for cand_id, score in top5.items():
+            print(f"  Candidato {cand_id}: Score {score:.4f}")
+        print()
