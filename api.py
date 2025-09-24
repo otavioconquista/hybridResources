@@ -49,3 +49,9 @@ async def match_vagas(file: UploadFile = File(...)):
         os.remove(vagas_path)
         
     return {"top_matches": top_matches}
+
+@app.get("/")
+def root():
+    return {"API de matching ativa. Insira '/docs' ao final da URL para acessar a funcionalidade."}
+
+app_handler = app  # Para garantir compatibilidade com Vercel
