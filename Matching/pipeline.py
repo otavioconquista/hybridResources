@@ -19,6 +19,8 @@ from Matching.scoring import (
     combine_scores
 )
 
+from Matching.preparingJobs import load_and_simplify_jobs, transform_jobs
+
 # ----------------------------
 # Core: carregar modelo e calcular embeddings
 # ----------------------------
@@ -33,6 +35,10 @@ def encode_texts(texts: List[str]) -> np.ndarray:
 # ----------------------------
 # Pipeline principal
 # ----------------------------
+
+load_and_simplify_jobs()  # Garante que jobs.json está atualizado
+transform_jobs(load_and_simplify_jobs())
+
 def match_jobs_candidates(jobs: List[Dict[str,Any]], candidates: List[Dict[str,Any]]) -> Dict[str,Any]:
     # extrair textos
     job_texts = [j.get("descricao","") or j.get("title","") or "" for j in jobs]

@@ -7,9 +7,6 @@ from config import (
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-# ----------------------------
-# Scoring helpers
-# ----------------------------
 def coverage_score(job_skills: Set[str], cand_skills: Set[str]) -> float:
     # quanto dos requisitos da vaga o candidato cobre: len(inter)/len(job_skills)
     if not job_skills:
