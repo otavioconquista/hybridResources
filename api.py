@@ -38,13 +38,12 @@ async def match_vagas(file: UploadFile = File(...)):
 
     # 5. Monta resposta: top 3 candidatos para cada vaga
     top_matches = []
-    for job_id, row in df.iterrows():
-        top3 = row.nlargest(3)
+    for match in res["top_matches"]:
         top_matches.append({
-            "vaga": job_id,
+            "vaga": match["job_id"],
             "top_candidatos": [
-                {"candidato": cand_id, "score": float(score)}
-                for cand_id, score in top3.items()
+                {"candidato": c["cand_id"], "score": c["match_score"]}
+                for c in match["top"]
             ]
         })
 
