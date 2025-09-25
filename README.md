@@ -4,6 +4,15 @@ Este projeto implementa uma solução web para realizar o matching entre vagas d
 
 A versão aqui apresentada é a free e com uma quantidade limitada de candidatos com formação em 2025. A versão premium é mais precisa e mais próxima das capacidades humanas, com pesquisa semântica/contextual e com atualização semestral de candidatos. Versão premium disponível sob encomenda.
 
+## Sumário
+
+- [Estrutura do repositório](#Estrutura-do-repositório)
+- [Hipótese](#hipótese)
+- [Funcionalidades](#funcionalidades)
+- [Instalação](#instalação)
+
+---
+
 ## Estrutura do repositório
 
 - JSONs/
@@ -13,15 +22,6 @@ A versão aqui apresentada é a free e com uma quantidade limitada de candidatos
 - dataExploration.ipynb
 - requirements.txt
 - vercel.json
-
-## Sumário
-
-- [Hipótese](#hipótese)
-- [Funcionalidades](#funcionalidades)
-- [Instalação](#instalação)
-- [Como usar](#como-usar)
-
----
 
 ## Hipótese
 
