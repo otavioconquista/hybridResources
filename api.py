@@ -25,7 +25,7 @@ async def match_vagas(file: UploadFile = File(...)):
     jobs_list = transform_jobs(filtered_jobs)
 
     # 3. Carrega candidatos
-    candidates_path = os.path.join(base_dir, "JSONs", "candidates.json")
+    candidates_path = "JSONs/candidates.json"
     if not os.path.exists(candidates_path):
         return JSONResponse({"erro": "Arquivo de candidatos não encontrado."}, status_code=400)
     with open(candidates_path, "r", encoding="utf-8") as f:
