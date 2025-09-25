@@ -1,11 +1,11 @@
-# Ignorar arquivos e pastas desnecessários no deploy
 __pycache__/
 *.pyc
 *.ipynb
 *.log
-.env
+.venv/
 .vscode/
 *.md
 dataExploration.ipynb
 JSONs/jobs_teste.json
 JSONs/vagas_padrao.json
+Utils/
