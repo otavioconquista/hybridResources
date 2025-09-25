@@ -32,9 +32,9 @@ async def match_vagas(file: UploadFile = File(...)):
     with open(candidates_path, "r", encoding="utf-8") as f:
         candidates = json.load(f)
 
+
     # 4. Aplica o matching
     res = match_jobs_candidates(jobs_list, candidates)
-    df = res["matrix_df"]
 
     # 5. Monta resposta: top 3 candidatos para cada vaga
     top_matches = []

@@ -1,19 +1,21 @@
-import spacy
 import pandas as pd
 from typing import List, Dict, Any
+import re
 
 from Matching.scoring import coverage_score
 
 TOP_N = 3
 
-# ----------------------------
-# Core: carregar modelo e calcular embeddings
-# ----------------------------
-nlp = spacy.load("pt_core_news_sm")
+# Lista simples de stopwords (pode expandir)
+STOPWORDS = set(["de", "da", "do", "em", "com", "e", "a", "o", "para", "por", "um", "uma", "no", "na", "os", "as"])
 
-def extract_skills_spacy(text: str) -> set:
-    doc = nlp(text or "")
-    return set([token.lemma_.lower() for token in doc if token.pos_ == "NOUN" and not token.is_stop])
+def simple_tokenizer(text):
+    tokens = re.findall(r'\b\w+\b', text.lower())
+    return [t for t in tokens if t not in STOPWORDS and len(t) > 2]
+
+def extract_skills(text: str):
+    tokens = re.findall(r'\b\w+\b', text.lower())
+    return set(t for t in tokens if t not in STOPWORDS and len(t) > 2)
 
 # ----------------------------
 # Pipeline principal
@@ -23,8 +25,8 @@ def match_jobs_candidates(jobs: List[Dict[str,Any]], candidates: List[Dict[str,A
     job_texts = [j.get("descricao","") or j.get("title","") or "" for j in jobs]
     cand_texts = [c.get("perfil","") or c.get("summary","") or "" for c in candidates]
 
-    job_skills_list = [extract_skills_spacy(t) for t in job_texts]
-    cand_skills_list = [extract_skills_spacy(t) for t in cand_texts]
+    job_skills_list = [extract_skills(t) for t in job_texts]
+    cand_skills_list = [extract_skills(t) for t in cand_texts]
 
     m = len(jobs)
     n = len(candidates)
@@ -36,20 +38,17 @@ def match_jobs_candidates(jobs: List[Dict[str,Any]], candidates: List[Dict[str,A
             row.append(score)
         combined_matrix.append(row)
 
-    df = pd.DataFrame(combined_matrix,
-                      index=[f"Vaga {j.get('id', idx)}" for idx,j in enumerate(jobs)],
-                      columns=[f"Candidato {c.get('id', idx)}" for idx,c in enumerate(candidates)])
-
+    # Monta resposta: top N candidatos para cada vaga
     top_matches = []
     for i, job in enumerate(jobs):
-        row = df.iloc[i]
-        ranked_idx = row.argsort()[::-1]
+        row = combined_matrix[i]
+        ranked_idx = sorted(range(len(row)), key=lambda k: row[k], reverse=True)
         top = []
         for k in ranked_idx[:TOP_N]:
             top.append({
                 "cand_index": int(k),
                 "cand_id": candidates[k].get("id"),
-                "match_score": float(row.iloc[k]),
+                "match_score": float(row[k]),
                 "cand_skills": sorted(list(cand_skills_list[k])),
                 "job_skills": sorted(list(job_skills_list[i]))
             })
@@ -60,6 +59,5 @@ def match_jobs_candidates(jobs: List[Dict[str,Any]], candidates: List[Dict[str,A
         })
 
     return {
-        "matrix_df": df,
         "top_matches": top_matches
     }
