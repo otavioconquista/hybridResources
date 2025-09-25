@@ -7,9 +7,9 @@ from Matching.pipeline import match_jobs_candidates
 
 app = FastAPI()
 
-@app.get("/")
-def root():
-    return {"API de matching ativa. Insira '/docs' ao final da URL para acessar a funcionalidade."}
+#@app.get("/")
+#def root():
+#    return {"API de matching ativa. Insira '/docs' ao final da URL para acessar a funcionalidade."}
 
 @app.post("/match_vaga")
 async def match_vaga_text(descricao: str = Form(...)):
