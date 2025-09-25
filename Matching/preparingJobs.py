@@ -4,8 +4,7 @@ import os
 # Lê o JSON de vagas e filtra apenas as vagas cujo valor de "nivel profissional" for igual a "Júnior" ou "Analista"
 def load_and_filter_jobs():
     # Path to the JSON file
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    json_path = os.path.join(base_dir, 'JSONs', 'vagas.json')
+    json_path = '/tmp/vagas.json'
 
     # Read the JSON file
     try:

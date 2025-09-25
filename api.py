@@ -14,8 +14,7 @@ def root():
 @app.post("/match")
 async def match_vagas(file: UploadFile = File(...)):
     # 1. Recebe o JSON e salva como vagas.json
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    vagas_path = os.path.join(base_dir, "JSONs", "vagas.json")
+    vagas_path = "/tmp/vagas.json"
     with open(vagas_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
