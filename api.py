@@ -2,7 +2,6 @@ from fastapi import Form
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 import shutil, os, json
-
 from Matching.preparingJobs import load_and_filter_jobs, transform_jobs
 from Matching.pipeline import match_jobs_candidates
 
