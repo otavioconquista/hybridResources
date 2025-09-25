@@ -7,6 +7,10 @@ from Matching.pipeline import match_jobs_candidates
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"API de matching ativa. Insira '/docs' ao final da URL para acessar a funcionalidade."}
+
 @app.post("/match")
 async def match_vagas(file: UploadFile = File(...)):
     # 1. Recebe o JSON e salva como vagas.json
@@ -46,11 +50,7 @@ async def match_vagas(file: UploadFile = File(...)):
     # 6. Apaga o arquivo temporário de vagas
     if os.path.exists(vagas_path):
         os.remove(vagas_path)
-        
-    return {"top_matches": top_matches}
 
-@app.get("/")
-def root():
-    return {"API de matching ativa. Insira '/docs' ao final da URL para acessar a funcionalidade."}
+    return {"top_matches": top_matches}
 
 app_handler = app  # Para garantir compatibilidade com Vercel
