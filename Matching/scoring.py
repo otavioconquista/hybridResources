@@ -5,4 +5,4 @@ def coverage_score(job_skills: Set[str], cand_skills: Set[str]) -> float:
     if not job_skills:
         return 0.0
     inter = job_skills.intersection(cand_skills)
-    return len(inter) / len(job_skills)
+    return len(inter) / len(job_skills)*100
