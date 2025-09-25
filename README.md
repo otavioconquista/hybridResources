@@ -1,6 +1,6 @@
-# API de Matching de Vagas e Candidatos
+# Ache o candidato certo para a sua vaga
 
-Este projeto implementa uma solução web para realizar o matching entre vagas de emprego do nível júnior e candidatos possíveis, utilizando análise de texto e cobertura de competências. A API foi desenvolvida com [FastAPI](https://fastapi.tiangolo.com/) e pode ser utilizada para identificar os candidatos mais aderentes a uma vaga específica ou para processar múltiplas vagas de uma só vez.
+Este projeto implementa o **hR**, hybridResources, uma solução web para realizar o matching entre vagas de emprego do nível júnior e candidatos possíveis, utilizando análise de texto e cobertura de competências. A API foi desenvolvida com [FastAPI](https://fastapi.tiangolo.com/) e pode ser utilizada para identificar os candidatos mais aderentes a uma vaga específica ou para processar múltiplas vagas de uma só vez.
 
 A versão aqui apresentada é a free e com uma quantidade limitada de candidatos com formação em 2025. A versão premium é mais precisa e mais próxima das capacidades humanas, com pesquisa semântica/contextual e com atualização semestral de candidatos. Versão premium disponível sob encomenda.
 
