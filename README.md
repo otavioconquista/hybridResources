@@ -25,7 +25,7 @@ A versão aqui apresentada é a free e com uma quantidade limitada de candidatos
 
 ## Hipótese
 
-Como analisado no arquivo dataExploration.py, a maior parte das vagas (40%) são do nível júnior. Ao automatizarmos o matching dos candidatos com as respectivas vagas, propomos dedicar a atenção dos funcionários de empresas de head hunting às vagas com mais nuances e especificidades, como é o caso de vagas de nível pleno, sênior ou de liderança.
+Como analisado no arquivo dataExploration.py, a maior parte das vagas (mais de 40%) são do nível júnior. Ao automatizarmos o matching dos candidatos com as respectivas vagas, propomos dedicar a atenção dos funcionários de empresas de head hunting às vagas com mais nuances e especificidades, como é o caso de vagas de nível pleno, sênior ou de liderança.
 
 Com o hybridResources propomos um paradigma de trabalho baseado em **inteligência híbrida**:
 
