@@ -13,11 +13,24 @@ def profile_scraping(linkedin_data):
 
   all_profiles_data = []
   not_found_profile = []
+  
+  file_path = '/linkedin_success_master.json'
+  try:
+    with open(file_path, 'r') as f:
+      linkedin_data = json.load(f)
+  except FileNotFoundError:
+    print(f"Error: The file {file_path} was not found.")
+  except json.JSONDecodeError:
+    print(f"Error: Could not decode JSON from the file {file_path}.")
+  except Exception as e:
+    print(f"An error occurred: {e}")
+
+  linkedin_urls = [item.get('LinkedIn URL') for item in linkedin_data if item.get('LinkedIn URL')]
+  linkedin_ids = [url.split('/in/')[-1].split('/')[0] for url in linkedin_urls]
 
   if linkedin_ids: # Only proceed if LinkedIn IDs were extracted
     for profile_id in linkedin_ids:
       combined_data = {}
-      
       # profile overview
       url_ov = f"https://linkdapi.com/api/v1/profile/overview?username={profile_id}"
       overview_response = requests.get(url_ov, headers=headers)
