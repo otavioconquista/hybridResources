@@ -1,13 +1,15 @@
-from fastapi import Form
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import shutil, os, json
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Matching.preparingJobs import load_and_filter_jobs, transform_jobs
 from Matching.pipeline import match_jobs_candidates
+
+
+
 
 app = FastAPI()
 
