@@ -9,3 +9,6 @@ dataExploration.ipynb
 JSONs/jobs_teste.json
 JSONs/vagas_padrao.json
 Utils/
+
+*.csv
+*.md
