@@ -3,6 +3,9 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import shutil, os, json
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from Matching.preparingJobs import load_and_filter_jobs, transform_jobs
 from Matching.pipeline import match_jobs_candidates
 
@@ -17,17 +20,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/health")
+@app.get("/health")
 def health_check():
     return {"status": "healthy", "message": "API de matching ativa"}
 
-@app.post("/api/match_vaga")
+@app.post("/match_vaga")
 async def match_vaga_text(descricao: str = Form(...)):
     # 1. Monta objeto de vaga temporário
     vaga = {"id": "vaga_unica", "descricao": descricao}
 
     # 2. Carrega candidatos
-    candidates_path = os.path.join(os.path.dirname(__file__), "JSONs", "candidates.json")
+    candidates_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "JSONs", "candidates.json")
     if not os.path.exists(candidates_path):
         return JSONResponse({"erro": "Arquivo de candidatos não encontrado."}, status_code=400)
     with open(candidates_path, "r", encoding="utf-8") as f:
@@ -44,7 +47,7 @@ async def match_vaga_text(descricao: str = Form(...)):
     ]
     return {"vaga": descricao, "top_candidatos": top_candidatos}
 
-@app.post("/api/match_vagas")
+@app.post("/match_vagas")
 async def match_vagas(file: UploadFile = File(...)):
     # 1. Recebe o JSON e salva como vagas.json
     vagas_path = "/tmp/vagas.json"
@@ -58,7 +61,7 @@ async def match_vagas(file: UploadFile = File(...)):
     jobs_list = transform_jobs(filtered_jobs)
 
     # 3. Carrega candidatos
-    candidates_path = os.path.join(os.path.dirname(__file__), "JSONs", "candidates.json")
+    candidates_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "JSONs", "candidates.json")
     if not os.path.exists(candidates_path):
         return JSONResponse({"erro": "Arquivo de candidatos não encontrado."}, status_code=400)
     with open(candidates_path, "r", encoding="utf-8") as f:
@@ -85,4 +88,5 @@ async def match_vagas(file: UploadFile = File(...)):
 
     return {"top_matches": top_matches}
 
-app_handler = app  # Para garantir compatibilidade com Vercel
+# Vercel handler
+handler = app
