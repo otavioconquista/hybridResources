@@ -17,11 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {"status": "healthy", "message": "API de matching ativa"}
 
-@app.post("/match_vaga")
+@app.post("/api/match_vaga")
 async def match_vaga_text(descricao: str = Form(...)):
     # 1. Monta objeto de vaga temporário
     vaga = {"id": "vaga_unica", "descricao": descricao}
@@ -44,7 +44,7 @@ async def match_vaga_text(descricao: str = Form(...)):
     ]
     return {"vaga": descricao, "top_candidatos": top_candidatos}
 
-@app.post("/match_vagas")
+@app.post("/api/match_vagas")
 async def match_vagas(file: UploadFile = File(...)):
     # 1. Recebe o JSON e salva como vagas.json
     vagas_path = "/tmp/vagas.json"

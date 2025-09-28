@@ -394,7 +394,7 @@
                     const formData = new FormData();
                     formData.append('descricao', descricao);
 
-                    const res = await fetch('/match_vaga', {
+                    const res = await fetch('/api/match_vaga', {
                         method: 'POST',
                         body: formData,
                         headers: {
@@ -436,7 +436,7 @@
                     const formData = new FormData();
                     formData.append('file', vagasFileInput.files[0]);
 
-                    const res = await fetch('/match_vagas', {
+                    const res = await fetch('/api/match_vagas', {
                         method: 'POST',
                         body: formData,
                         headers: {

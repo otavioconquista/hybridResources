@@ -4,12 +4,8 @@
     { "src": "api.py", "use": "@vercel/python" }
   ],
   "routes": [
+    { "src": "/api/(.*)", "dest": "/api.py" },
     { "src": "/", "dest": "/index.html" },
-    { "src": "/health", "dest": "api.py" },
-    { "src": "/match_vaga", "dest": "api.py" },
-    { "src": "/match_vagas", "dest": "api.py" },
-    { "src": "/docs", "dest": "api.py" },
-    { "src": "/openapi.json", "dest": "api.py" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
