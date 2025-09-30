@@ -1,7 +1,7 @@
 {
   "functions": {
     "app/index.py": {
-      "includeFiles": "JSONs/**"
+      "runtime": "python3.11"
     }
   },
   "builds": [
