@@ -8,11 +8,9 @@ TOP_N = 3
 # Lista simples de stopwords (pode expandir)
 STOPWORDS = set(["de", "da", "do", "em", "com", "e", "a", "o", "para", "por", "um", "uma", "no", "na", "os", "as"])
 
-def simple_tokenizer(text):
-    tokens = re.findall(r'\b\w+\b', text.lower())
-    return [t for t in tokens if t not in STOPWORDS and len(t) > 2]
-
 def extract_skills(text: str):
+    # Remove quebras de linha e substitui por espaços
+    text = text.replace('\n', ' ')
     tokens = re.findall(r'\b\w+\b', text.lower())
     return set(t for t in tokens if t not in STOPWORDS and len(t) > 2)
 
