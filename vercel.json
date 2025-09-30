@@ -1,26 +1,14 @@
 {
   "builds": [
     {
-      "src": "app/index.py",
+      "src": "app.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/match_vaga",
-      "dest": "app/index.py"
-    },
-    {
-      "src": "/match_vagas", 
-      "dest": "app/index.py"
-    },
-    {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "app.py"
     }
   ]
 }

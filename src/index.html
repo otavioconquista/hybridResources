@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hybrid Resources | Plataforma de Matchmaking</title>
+    <title>Decision | Plataforma de Matchmaking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-color: #581c87; /* Roxo escuro para ações principais */
-            --secondary-color: #3b82f6; /* Azul do logo */
-            --accent-color: #db2777; /* Rosa do logo */
-            --bg-color: #f8fafc; /* Fundo cinza claro */
+            --primary-color: #581c87; /* Deep purple for main actions */
+            --secondary-color: #3b82f6; /* Blue accent from logo */
+            --accent-color: #db2777; /* Pink accent from logo */
+            --bg-color: #f8fafc; /* Light gray background */
             --card-bg-color: #ffffff;
             --text-color: #334155;
             --light-text-color: #64748b;
@@ -21,7 +21,7 @@
             --font-family: 'Poppins', sans-serif;
         }
 
-        /* Reset Geral & Estilos do Body */
+        /* General Reset & Body Styles */
         * {
             margin: 0;
             padding: 0;
@@ -38,7 +38,7 @@
             min-height: 100vh;
         }
 
-        /* Cabeçalho */
+        /* Header */
         header {
             background-color: var(--card-bg-color);
             padding: 20px 40px;
@@ -48,8 +48,9 @@
         }
 
         .logo {
+            /* Adjusted styling for the new logo dimensions */
             height: 45px;
-            width: auto;
+            width: auto; /* Maintain aspect ratio */
             margin-right: 20px;
         }
 
@@ -59,7 +60,7 @@
             font-weight: 600;
         }
         
-        /* Conteúdo Principal & Layout */
+        /* Main Content & Layout */
         main {
             flex-grow: 1;
             padding: 40px 20px;
@@ -97,7 +98,7 @@
             margin: 10px auto 0;
         }
 
-        /* Estilo dos Cards */
+        /* Card Styling */
         .card {
             background-color: var(--card-bg-color);
             border-radius: 12px;
@@ -121,7 +122,7 @@
             color: var(--primary-color);
         }
 
-        /* Elementos de Formulário */
+        /* Form Elements */
         label {
             display: block;
             margin-bottom: 8px;
@@ -146,7 +147,7 @@
             box-shadow: 0 0 0 3px rgba(88, 28, 135, 0.1);
         }
 
-        /* Input de Arquivo Customizado */
+        /* Custom File Input */
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
@@ -187,7 +188,7 @@
         }
 
 
-        /* Botão */
+        /* Button */
         .btn {
             display: flex;
             justify-content: center;
@@ -232,7 +233,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Área de Resultado */
+        /* Result Area */
         .result-container {
             margin-top: 25px;
         }
@@ -243,7 +244,7 @@
         }
         
         pre {
-            background: #1e293b; /* Fundo escuro para código */
+            background: #1e293b; /* Dark background for code */
             color: #f8fafc;
             padding: 15px;
             border-radius: 8px;
@@ -253,7 +254,7 @@
             font-size: 0.9rem;
         }
 
-        /* Rodapé */
+        /* Footer */
         footer {
             text-align: center;
             padding: 20px;
@@ -321,6 +322,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Element Selectors ---
             const formVagaUnica = document.getElementById('formVagaUnica');
             const descricaoInput = document.getElementById('descricao');
             const btnMatchVaga = document.getElementById('btnMatchVaga');
@@ -334,6 +336,7 @@
             const vagasResultContainer = document.getElementById('vagasResultContainer');
             const vagasResultPre = document.getElementById('vagasResult');
             
+            // --- UI Helper Functions ---
             const toggleLoading = (button, isLoading) => {
                 button.disabled = isLoading;
                 const buttonText = button.querySelector('span');
@@ -349,9 +352,13 @@
                 container.hidden = false;
             };
 
+            // --- Event Listeners ---
+
+            // Store original button text
             btnMatchVaga.dataset.originalText = btnMatchVaga.querySelector('span').textContent;
             btnMatchVagas.dataset.originalText = btnMatchVagas.querySelector('span').textContent;
 
+            // Handle single job submission
             formVagaUnica.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const descricao = descricaoInput.value.trim();
@@ -366,15 +373,15 @@
                     const formData = new FormData();
                     formData.append('descricao', descricao);
 
-                    // ==================================================
-                    //  CORREÇÃO DA URL: Removido o prefixo /api/
-                    // ==================================================
                     const res = await fetch('/match_vaga', {
                         method: 'POST',
                         body: formData
                     });
 
-                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+
                     const data = await res.json();
                     displayResult(vagaResultContainer, vagaResultPre, data);
 
@@ -387,6 +394,7 @@
                 }
             });
 
+            // Handle multiple jobs submission
             vagasFileInput.addEventListener('change', () => {
                 fileNameSpan.textContent = vagasFileInput.files.length > 0 ? vagasFileInput.files[0].name : '';
             });
@@ -403,16 +411,16 @@
                 try {
                     const formData = new FormData();
                     formData.append('file', vagasFileInput.files[0]);
-                    
-                    // ==================================================
-                    //  CORREÇÃO DA URL: Removido o prefixo /api/
-                    // ==================================================
+
                     const res = await fetch('/match_vagas', {
-                        method: 'POST', 
+                        method: 'POST',
                         body: formData
                     });
                     
-                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+
                     const data = await res.json();
                     displayResult(vagasResultContainer, vagasResultPre, data);
 
