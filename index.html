@@ -266,6 +266,19 @@
                 font-size: 0.9rem;
             }
 
+            /* Disclaimer */
+            .disclaimer {
+                text-align: center;
+                font-size: 0.85rem;
+                color: var(--light-text-color);
+                max-width: 900px;
+                margin: 30px auto 0;
+                padding: 15px;
+                background-color: var(--card-bg-color);
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+            }
+
             /* Footer */
             footer {
                 text-align: center;
@@ -284,7 +297,7 @@
         <header>
             <img src="https://static.wixstatic.com/media/f520ac_c75af83d4bb649d18abd658dec39f0a4~mv2.png/v1/fill/w_280,h_176,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo_decision_pequeno_home.png"
                 alt="Decision Logo" class="logo">
-            <h1>Hybrid Resources</h1>
+            <h1>Tecnologia e Inovação</h1>
         </header>
 
         <main>
@@ -313,7 +326,7 @@
                 <section class="card">
                     <h3>Análise de Múltiplas Vagas</h3>
                     <form id="formVagasMultiplas">
-                        <label for="vagasFile">Carregar Arquivo (.json)</label>
+                        <label for="vagasFile">Carregar arquivo (.json)</label>
                         <div class="file-input-wrapper">
                             <span class="file-label-text">Clique para selecionar um arquivo</span>
                             <input type="file" id="vagasFile" accept=".json">
@@ -329,10 +342,14 @@
                     </div>
                 </section>
             </div>
+
+            <div class="disclaimer">
+                Você está usando a versão free. A versão premium oferece um matching mais preciso e considera um número bem maior de possíveis candidatos. Para contratar a versão premium, contate os desenvolvedores via FIAP.
+            </div>
         </main>
 
         <footer>
-            &copy; 2025 Hybrid Resources - Tecnologia e Inovação para head hunting. Todos os direitos reservados.
+            &copy; 2025 Hybrid Resources - Tecnologia e inovação para head hunting. Todos os direitos reservados.
         </footer>
 
         <script>
