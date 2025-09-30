@@ -46,10 +46,14 @@ async def match_vaga_text(descricao: str = Form(...)):
         # 3. Aplica o matching
         res = match_jobs_candidates([vaga], candidates)
 
-        # 4. Monta resposta: top 3 candidatos para a vaga
+        # 4. Monta resposta: top 3 candidatos para a vaga com seus links
         match = res["top_matches"][0]
         top_candidatos = [
-            {"candidato": c["cand_id"], "score": c["match_score"]}
+            {
+                "candidato": c["cand_id"], 
+                "score": c["match_score"],
+                "link": next((cand["link"] for cand in candidates if cand["id"] == c["cand_id"]), None)
+            }
             for c in match["top"]
         ]
         return {"vaga": descricao, "top_candidatos": top_candidatos}
@@ -82,13 +86,17 @@ async def match_vagas(file: UploadFile = File(...)):
         # 4. Aplica o matching
         res = match_jobs_candidates(jobs_list, candidates)
 
-        # 5. Monta resposta: top 3 candidatos para cada vaga
+        # 5. Monta resposta: top 3 candidatos para cada vaga com seus links
         top_matches = []
         for match in res["top_matches"]:
             top_matches.append({
                 "vaga": match["job_id"],
                 "top_candidatos": [
-                    {"candidato": c["cand_id"], "score": c["match_score"]}
+                    {
+                        "candidato": c["cand_id"], 
+                        "score": c["match_score"],
+                        "link": next((cand["link"] for cand in candidates if cand["id"] == c["cand_id"]), None)
+                    }
                     for c in match["top"]
                 ]
             })
