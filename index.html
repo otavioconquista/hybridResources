@@ -251,19 +251,70 @@
 
             .result-container h4 {
                 font-weight: 600;
+                margin-bottom: 20px;
+                color: var(--primary-color);
+            }
+
+            .candidate-cards {
+                display: grid;
+                gap: 20px;
+            }
+
+            .candidate-card {
+                background: var(--card-bg-color);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                border: 1px solid var(--border-color);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .candidate-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .candidate-name {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--primary-color);
                 margin-bottom: 10px;
             }
 
-            pre {
-                background: #1e293b;
-                /* Dark background for code */
-                color: #f8fafc;
-                padding: 15px;
-                border-radius: 8px;
-                white-space: pre-wrap;
-                word-wrap: break-word;
-                font-family: 'Courier New', Courier, monospace;
+            .candidate-score {
+                display: inline-block;
+                background: var(--primary-color);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
                 font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+
+            .candidate-link {
+                display: inline-flex;
+                align-items: center;
+                text-decoration: none;
+                color: var(--secondary-color);
+                font-weight: 500;
+                transition: color 0.2s;
+            }
+
+            .candidate-link:hover {
+                color: var(--accent-color);
+            }
+
+            .candidate-link svg {
+                margin-right: 6px;
+            }
+
+            .vaga-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text-color);
+                margin: 30px 0 15px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid var(--border-color);
             }
 
             /* Disclaimer */
@@ -379,8 +430,59 @@
                     }
                 };
 
+                const createCandidateCard = (candidato, score, link) => {
+                    const card = document.createElement('div');
+                    card.className = 'candidate-card';
+                    
+                    const scorePercent = (score * 100).toFixed(1);
+                    
+                    card.innerHTML = `
+                        <div class="candidate-name">${candidato}</div>
+                        <div class="candidate-score">${scorePercent}% de match</div>
+                        <a href="${link}" target="_blank" class="candidate-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                            Ver perfil no LinkedIn
+                        </a>
+                    `;
+                    
+                    return card;
+                };
+
                 const displayResult = (container, preElement, data) => {
-                    preElement.textContent = JSON.stringify(data, null, 2);
+                    // Limpa o conteúdo anterior
+                    container.innerHTML = '<h4>Resultado da análise:</h4>';
+                    
+                    const cardsContainer = document.createElement('div');
+                    cardsContainer.className = 'candidate-cards';
+                    
+                    if (data.top_candidatos) {
+                        // Caso de vaga única
+                        data.top_candidatos.forEach(candidato => {
+                            cardsContainer.appendChild(
+                                createCandidateCard(candidato.candidato, candidato.score, candidato.link)
+                            );
+                        });
+                    } else if (data.top_matches) {
+                        // Caso de múltiplas vagas
+                        data.top_matches.forEach(match => {
+                            const vagaTitle = document.createElement('div');
+                            vagaTitle.className = 'vaga-title';
+                            vagaTitle.textContent = `Vaga: ${match.vaga}`;
+                            cardsContainer.appendChild(vagaTitle);
+                            
+                            match.top_candidatos.forEach(candidato => {
+                                cardsContainer.appendChild(
+                                    createCandidateCard(candidato.candidato, candidato.score, candidato.link)
+                                );
+                            });
+                        });
+                    }
+                    
+                    container.appendChild(cardsContainer);
                     container.hidden = false;
                 };
 
