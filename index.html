@@ -463,7 +463,7 @@
                     
                     if (data.top_candidatos) {
                         // Caso de vaga única - filtrar candidatos com matching > 49.5%
-                        const candidatosFiltrados = data.top_candidatos.filter(candidato => candidato.score * 100 >= 49.5);
+                        const candidatosFiltrados = data.top_candidatos.filter(candidato => candidato.score * 100 >= 30);
                         
                         if (candidatosFiltrados.length === 0) {
                             const mensagem = document.createElement('div');
