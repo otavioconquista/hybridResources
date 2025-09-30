@@ -6,6 +6,10 @@ from Matching.pipeline import match_jobs_candidates
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
+# Configuração dos caminhos
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+
 app = FastAPI()
 
 # Configuração do CORS
@@ -28,7 +32,7 @@ async def match_vaga_text(descricao: str = Form(...)):
         vaga = {"id": "vaga_unica", "descricao": descricao}
 
         # 2. Carrega candidatos
-        candidates_path = "JSONs/candidates.json"
+        candidates_path = os.path.join(PROJECT_ROOT, "JSONs", "candidates.json")
         if not os.path.exists(candidates_path):
             return JSONResponse(
                 {"erro": "Arquivo de candidatos não encontrado."}, 
@@ -78,7 +82,7 @@ async def match_vagas(file: UploadFile = File(...)):
         jobs_list = transform_jobs(filtered_jobs)
 
         # 3. Carrega candidatos
-        candidates_path = "JSONs/candidates.json"
+        candidates_path = os.path.join(PROJECT_ROOT, "JSONs", "candidates.json")
         if not os.path.exists(candidates_path):
             return JSONResponse(
                 {"erro": "Arquivo de candidatos não encontrado."}, 
@@ -110,4 +114,4 @@ async def match_vagas(file: UploadFile = File(...)):
         )
 
 # Handler para Vercel
-handler = Mangum(app, lifespan="off")
+handler = Mangum(app)
