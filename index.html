@@ -471,7 +471,9 @@
                         data.top_matches.forEach(match => {
                             const vagaTitle = document.createElement('div');
                             vagaTitle.className = 'vaga-title';
-                            vagaTitle.textContent = `Vaga: ${match.vaga}`;
+                            const vagaId = match.vaga;
+                            const vagaTitulo = match.titulo_vaga || ''; // Usa string vazia se não houver título
+                            vagaTitle.textContent = `Vaga: ${vagaId}${vagaTitulo ? ` - ${vagaTitulo}` : ''}`;
                             cardsContainer.appendChild(vagaTitle);
                             
                             match.top_candidatos.forEach(candidato => {
